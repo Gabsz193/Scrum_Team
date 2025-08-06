@@ -20,16 +20,23 @@ class ScrumTeamCrew():
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
-    def researcher(self) -> Agent:
+    def product_owner(self) -> Agent:
         return Agent(
-            config=self.agents_config['researcher'], # type: ignore[index]
+            config=self.agents_config['product_owner'], # type: ignore[index]
             verbose=True
         )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def scrum_master(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
+            config=self.agents_config['scrum_master'], # type: ignore[index]
+            verbose=True
+        )
+
+    @agent
+    def senior_developer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['senior_developer'], # type: ignore[index]
             verbose=True
         )
 
@@ -37,16 +44,34 @@ class ScrumTeamCrew():
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
-    def research_task(self) -> Task:
+    def product_backlog_task(self) -> Task:
         return Task(
-            config=self.tasks_config['research_task'], # type: ignore[index]
+            config=self.tasks_config['product_backlog_task'], # type: ignore[index]
+            output_file='product_backlog.md'
         )
 
     @task
-    def reporting_task(self) -> Task:
+    def sprint_planning_task(self) -> Task:
         return Task(
-            config=self.tasks_config['reporting_task'], # type: ignore[index]
-            output_file='report.md'
+            config=self.tasks_config['sprint_planning_task'], # type: ignore[index]
+            output_file='sprint_backlog.md',
+            depends_on=[self.product_backlog_task]
+        )
+
+    @task
+    def development_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['development_task'], # type: ignore[index]
+            output_file='code_implementation.md',
+            depends_on=[self.sprint_planning_task]
+        )
+
+    @task
+    def sprint_review_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['sprint_review_task'], # type: ignore[index]
+            output_file='sprint_review.md',
+            depends_on=[self.development_task]
         )
 
     @crew

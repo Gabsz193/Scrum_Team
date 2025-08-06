@@ -1,17 +1,39 @@
-research_task:
+product_backlog_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Create a product backlog for the {project_name} project based on {requirements}.
+    Prioritize features according to user value and technical feasibility.
+    Break down complex requirements into smaller, manageable user stories.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A prioritized product backlog with clearly defined user stories, acceptance criteria,
+    and story points for estimation. Format as markdown.
+  agent: product_owner
 
-reporting_task:
+sprint_planning_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Facilitate the sprint planning for {project_name} by selecting items from the product backlog
+    based on team capacity and priority. Define the sprint goal and create a sprint backlog.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A detailed sprint backlog with selected user stories, broken down into tasks with estimated
+    effort. Include the sprint goal and duration. Format as markdown.
+  agent: scrum_master
+
+development_task:
+  description: >
+    Implement the user stories assigned for the current sprint of {project_name}.
+    Follow best coding practices, write clean and efficient code based on the specifications.
+    Consider technical debt and maintainability of the solution.
+  expected_output: >
+    Clean, well-documented code implementation for the assigned user stories.
+    Include unit tests and technical documentation where appropriate.
+    Format as markdown with code snippets.
+  agent: senior_developer
+
+sprint_review_task:
+  description: >
+    Conduct a sprint review for {project_name}, analyzing what was accomplished during the sprint.
+    Gather feedback on the implemented features and identify any improvements needed.
+  expected_output: >
+    A comprehensive sprint review report detailing completed user stories,
+    demo-ready features, stakeholder feedback, and items to be carried over to the next sprint.
+    Format as markdown.
+  agent: scrum_master
